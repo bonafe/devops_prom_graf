@@ -44,7 +44,7 @@ spec:
         - name: MYSQL_USER
           value: grafana_user
         image: mariadb:10.2.33
-        imagePullPolicy: ""
+        imagePullPolicy: IfNotPresent
         name: grafanadb
         resources: {}
         ports:

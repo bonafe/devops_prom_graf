@@ -43,7 +43,7 @@ spec:
               key: INFLUXDB_DB
               name: files-influxdb-env
         image: influxdb:1.8.2
-        imagePullPolicy: ""
+        imagePullPolicy: IfNotPresent
         name: influxdb
         ports:
         - containerPort: 8086

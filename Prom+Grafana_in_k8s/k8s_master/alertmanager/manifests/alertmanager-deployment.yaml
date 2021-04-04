@@ -30,7 +30,7 @@ spec:
         - --config.file=/etc/alertmanager/config.yml
         - --storage.path=/alertmanager
         image: prom/alertmanager:v0.21.0
-        imagePullPolicy: ""
+        imagePullPolicy: IfNotPresent
         name: alertmanager
         ports:
         - containerPort: 9093
