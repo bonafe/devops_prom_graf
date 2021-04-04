@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 -v convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: influxdb
+  name: influxdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: influxdb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 -v convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/back-tier: "true"
+        io.kompose.service: influxdb
+    spec:
+      containers:
+      - env:
+        - name: INFLUXDB_ADMIN_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: INFLUXDB_ADMIN_PASSWORD
+              name: files-influxdb-env
+        - name: INFLUXDB_ADMIN_USER
+          valueFrom:
+            configMapKeyRef:
+              key: INFLUXDB_ADMIN_USER
+              name: files-influxdb-env
+        - name: INFLUXDB_DB
+          valueFrom:
+            configMapKeyRef:
+              key: INFLUXDB_DB
+              name: files-influxdb-env
+        image: influxdb:1.8.2
+        imagePullPolicy: ""
+        name: influxdb
+        ports:
+        - containerPort: 8086
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/lib/influxdb
+          name: influxdb-data
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: influxdb-data
+        persistentVolumeClaim:
+          claimName: influxdb-data
+status: {}

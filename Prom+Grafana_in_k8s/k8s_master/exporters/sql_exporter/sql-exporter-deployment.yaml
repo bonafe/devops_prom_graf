@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sql-exporter
+  annotations:
+    configmap.reloader.stakater.com/reload: "sql-exporter-configmap"
+spec:
+  selector:
+    matchLabels:
+      app: sql-exporter
+  template:
+    metadata:
+      labels:
+        app: sql-exporter
+        release: sql-exporter
+    spec:
+      containers:
+      - name: sql-exporter
+        image: "hantonio/sql_exporter:2021.01"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9399
+          name: http
+        volumeMounts:
+        - mountPath: /config/sql_exporter.yml
+          subPath: sql_exporter.yml
+          name: sql-exporter-configmap-volume
+        - mountPath: /config/tickets.collector.yml
+          subPath: tickets.collector.yml
+          name: sql-exporter-configmap-volume
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: sql-exporter-configmap-volume
+        configMap:
+          name: sql-exporter-configmap
+          

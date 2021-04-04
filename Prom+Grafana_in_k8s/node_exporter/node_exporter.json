@@ -1,0 +1,12 @@
+{
+  "id": "k3s_node_exporter",
+  "name": "k3s1_node_exporter",
+  "Address": "10.116.0.7",
+  "port": 9100,
+  "check": {
+    "name": "ping check",
+    "args": ["ping", "-c1", "10.116.0.7"],
+    "interval": "30s",
+    "status": "passing"
+  }
+}

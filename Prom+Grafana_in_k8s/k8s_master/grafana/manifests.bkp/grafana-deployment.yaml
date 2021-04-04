@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 -v convert
+    kompose.controller.type: deployment
+    kompose.service.nodeport.port: "30300"
+    kompose.service.type: nodeport
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: grafana
+  name: grafana
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      io.kompose.service: grafana
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 -v convert
+        kompose.controller.type: deployment
+        kompose.service.nodeport.port: "30300"
+        kompose.service.type: nodeport
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/back-tier: "true"
+        io.kompose.network/front-tier: "true"
+        io.kompose.service: grafana
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
+      containers:
+      - image: grafana/grafana:7.1.5
+        imagePullPolicy: ""
+        name: grafana
+        ports:
+        - containerPort: 3000
+        resources: {}
+        securityContext:
+          runAsUser: 472
+        volumeMounts:
+        - mountPath: /etc/grafana/grafana.ini
+          subPath: grafana.ini
+          name: grafana-configmap-volume
+        - mountPath: /var/lib/grafana
+          name: grafana-data
+        - mountPath: /etc/grafana/provisioning/
+          name: grafana-provisioning
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: grafana-configmap-volume
+        configMap:
+          name: grafana-configmap
+      - name: grafana-data
+        persistentVolumeClaim:
+          claimName: grafana-data
+      - name: grafana-provisioning
+        persistentVolumeClaim:
+          claimName: grafana-provisioning
+status: {}

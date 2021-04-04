@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  MYSQL_DATABASE: grafanadb
+  MYSQL_PASSWORD: grafana
+  MYSQL_ROOT_PASSWORD: Icaro@dmin123
+  MYSQL_USER: grafanadb_user
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: grafanadb-files-grafanadb-env
+  name: files-grafanadb-env

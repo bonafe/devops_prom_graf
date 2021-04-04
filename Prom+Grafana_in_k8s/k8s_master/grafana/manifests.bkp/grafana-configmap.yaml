@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-configmap
+  labels:
+    app: grafana
+data:
+  grafana.ini: |
+    #################################### Database ####################################
+    [database]
+    # You can configure the database connection by specifying type, host, name, user and password
+    # as seperate properties or as on string using the url propertie.
+  
+    # Either "mysql", "postgres" or "sqlite3", it's your choice
+    type = mysql
+    host = grafanadb:3306
+    name = grafanadb
+    user = grafana_user
+
+    # If the password contains # or ; you have to wrap it with trippel quotes. Ex """#password;"""
+    #;password =
+
+    password = grafana
+
+    #################################### Session ####################################
+    [session]
+    # Either "memory", "file", "redis", "mysql", "postgres", default is "file"
+
+    provider = mysql
+    # Provider config options
+    # memory: not have any config yet
+    # file: session dir path, is relative to grafana data_path
+    # redis: config like redis server e.g. `addr=127.0.0.1:6379,pool_size=100,db=grafana`
+    # mysql: go-sql-driver/mysql dsn config string, e.g. `user:password@tcp(127.0.0.1:3306)/database_name`
+    # postgres: user=a password=b host=localhost port=5432 dbname=c sslmode=disable
+    provider_config = `grafana_user:grafana@tcp(grafanadb:3306)/grafanadb`
+
+    # Session cookie name
+    ;cookie_name = grafana_sess
+
+    # If you use session in https only, default is false
+    ;cookie_secure = false
+
+    # Session life time, default is 86400
+    ;session_life_time = 86400

@@ -1,0 +1,12 @@
+{
+  "Address": "10.116.0.7",
+  "ID": "k3s1_NodeExporter",
+  "Name": "node-exporter",
+  "Port": 9100,
+  "Tags": [
+   "_service=node-exporter",
+   "_hostname=k3s1",
+   "_environment=dev",
+   "_cluster=managedservices"
+  ]
+}

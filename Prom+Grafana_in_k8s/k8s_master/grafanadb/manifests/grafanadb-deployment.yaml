@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 -v convert
+    kompose.controller.type: deployment
+    kompose.service.nodeport.port: "30360"
+    kompose.service.type: nodeport
+    kompose.version: 1.21.0 (992df58d8)
+    kompose.volume.size: 1Gi
+  creationTimestamp: null
+  labels:
+    io.kompose.service: grafanadb
+  name: grafanadb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: grafanadb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 -v convert
+        kompose.controller.type: deployment
+        kompose.service.nodeport.port: "30360"
+        kompose.service.type: nodeport
+        kompose.version: 1.21.0 (992df58d8)
+        kompose.volume.size: 1Gi
+      creationTimestamp: null
+      labels:
+        io.kompose.network/back-tier: "true"
+        io.kompose.service: grafanadb
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_DATABASE
+          value: grafanadb
+        - name: MYSQL_PASSWORD
+          value: grafana
+        - name: MYSQL_ROOT_PASSWORD
+          value: IcaroAdmin123!
+        - name: MYSQL_USER
+          value: grafana_user
+        image: mariadb:10.2.33
+        imagePullPolicy: ""
+        name: grafanadb
+        resources: {}
+        ports:
+        - containerPort: 3306
+          name: mariadb
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: grafanadb-data
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: grafanadb-data
+        persistentVolumeClaim:
+          claimName: grafanadb-data
+status: {}

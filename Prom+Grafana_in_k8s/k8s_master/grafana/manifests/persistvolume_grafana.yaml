@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: grafana-data
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: longhorn-nfs
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /grafana_data
+    server: 10.116.0.8 

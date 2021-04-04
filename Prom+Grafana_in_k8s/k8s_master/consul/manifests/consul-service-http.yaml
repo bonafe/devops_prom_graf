@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: consul
+  name: consul-external
+spec:
+  ports:
+  - name: "8500"
+    nodePort: 30850
+    port: 8500
+    targetPort: 8500
+  selector:
+    app: consul
+  type: NodePort
+status:
+  loadBalancer: {}
+

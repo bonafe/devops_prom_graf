@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-configmap
+  labels:
+    application: prometheus
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 30s
+      evaluation_interval: 30s
+    alerting:
+      alertmanagers:
+      - static_configs:
+        - targets:
+          - alertmanager:9093       
+    rule_files:
+      - "/etc/config/alert.rules"      
+    
+    remote_write:
+    - url: "http://influxdb:8086/api/v1/prom/write?u=icaroAdmin&p=Icaro@dmin123&db=prometheusdb"
+
+    remote_read:
+    - url: "http://influxdb:8086/api/v1/prom/read?u=icaroAdmin&p=Icaro@dmin123&db=prometheusdb"
+
+    scrape_configs:
+    - job_name: prometheus
+      metrics_path: /prometheus/metrics
+      scheme: https
+      basic_auth:
+        username: 'admin'
+        password: 'secret'
+      tls_config:
+        insecure_skip_verify: true
+      static_configs:
+        - targets:
+          - 192.168.0.186
+          - 192.168.0.187
+    - job_name: cadvisor
+      static_configs:
+        - targets:
+          - 192.168.0.186:8080
+          - 192.168.0.187:8080
+    - job_name: node_exporter
+      static_configs:
+        - targets:
+          - 192.168.0.186:9100
+          - 192.168.0.187:9100
+    - job_name: apache_exporter
+      static_configs:
+      - targets: ['165.227.220.250:9117']
+    - job_name: ubuntu_node_exporter
+      static_configs:
+      - targets: ['165.227.220.250:9100']
+    - job_name: windows_exporter
+      static_configs:
+      - targets: ['192.168.0.191:9182']
+    - job_name: 'snmp'
+      static_configs:
+        - targets:
+          - 127.0.0.1  # SNMP device.
+      metrics_path: /snmp
+      params:
+        module: [if_mib]
+      relabel_configs:
+        - source_labels: [__address__]
+          target_label: __param_target
+        - source_labels: [__param_target]
+          target_label: instance
+        - target_label: __address__
+          replacement: 165.227.220.250:9116
+    - job_name: 'node_js_app'
+      static_configs:
+        - targets:
+          - 192.168.0.191:3000              

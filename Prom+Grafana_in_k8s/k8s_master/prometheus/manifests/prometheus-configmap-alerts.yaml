@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-configmap-alerts
+  labels:
+    application: prometheus
+data:
+  alert.rules: |
+    groups:
+    - name: alert.rules
+      rules:
+      - alert: Instance_Down
+        expr: up == 0
+        for: 10s
+        labels:
+          severity: "critical"
+        annotations:
+          summary: "Instance {<200c>{ $labels.instance }} down"
+          description: "{<200c>{ $labels.instance }} of job {<200c>{ $labels.job }} has been down for more than 30s."        

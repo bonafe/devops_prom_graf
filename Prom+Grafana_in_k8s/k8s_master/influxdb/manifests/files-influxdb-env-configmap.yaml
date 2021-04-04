@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+  INFLUXDB_ADMIN_PASSWORD: Icaro@dmin123
+  INFLUXDB_ADMIN_USER: icaroAdmin
+  INFLUXDB_DB: prometheusdb
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: influxdb-files-influxdb-env
+  name: files-influxdb-env

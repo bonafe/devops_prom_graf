@@ -1,0 +1,9 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- consul-configmap.yaml
+- consul-service-http.yaml
+- consul-service.yaml
+- consul-statefulset.yaml

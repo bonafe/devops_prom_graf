@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 -v convert
+    kompose.controller.type: deployment
+    kompose.service.nodeport.port: "30300"
+    kompose.service.type: nodeport
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: grafana
+  name: grafana
+spec:
+  ports:
+  - name: "3000"
+    nodePort: 30300
+    port: 3000
+    targetPort: 3000
+  selector:
+    io.kompose.service: grafana
+  type: NodePort
+status:
+  loadBalancer: {}

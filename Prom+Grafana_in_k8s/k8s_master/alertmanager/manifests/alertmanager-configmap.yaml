@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alertmanager-configmap
+  labels:
+    app: alertmanager
+data:
+  config.yml: |
+    global:
+      # The smarthost and SMTP sender used for mail notifications.
+      smtp_smarthost: 'smtp.mailgun.org:2525'
+      smtp_from: 'postmaster@sandbox14282f64570b4e01910ddb12dec6eebe.mailgun.org'
+      smtp_auth_identity: 'postmaster@sandbox14282f64570b4e01910ddb12dec6eebe.mailgun.org'
+      smtp_require_tls: true
+
+    # The root route on which each incoming alert enters.
+    route:
+      # The root route must not have any matchers as it is the entry point for
+      # all alerts. It needs to have a receiver configured so alerts that do not
+      # match any of the sub-routes are sent to someone.
+      receiver: 'operations-team'
+
+      # The labels by which incoming alerts are grouped together. For example,
+      # multiple alerts coming in for cluster=A and alertname=LatencyHigh would
+      # be batched into a single group.
+      #
+      # To aggregate by all possible labels use '...' as the sole label name.
+      # This effectively disables aggregation entirely, passing through all
+      # alerts as-is. This is unlikely to be what you want, unless you have
+      # a very low alert volume or your upstream notification system performs
+      # its own grouping. Example: group_by: [...]
+      # group_by: ['alertname', 'cluster']
+
+      # When a new group of alerts is created by an incoming alert, wait at
+      # least 'group_wait' to send the initial notification.
+      # This way ensures that you get multiple alerts for the same group that start
+      # firing shortly after another are batched together on the first
+      # notification.
+      # group_wait: 30s
+
+      # When the first notification was sent, wait 'group_interval' to send a batch
+      # of new alerts that started firing for that group.
+      # group_interval: 5m
+
+      # If an alert has successfully been sent, wait 'repeat_interval' to
+      # resend them.
+      repeat_interval: 1m
+
+    receivers:
+    - name: 'operations-team'
+      email_configs:
+      - to: 'lucas.rizzi@hotmail.com'
+        auth_username: 'postmaster@sandbox14282f64570b4e01910ddb12dec6eebe.mailgun.org'
+        auth_password: 'b3cce19f4e476f75c6cf599dd69959fc-e49cc42c-b1b06f19'
+        send_resolved: true

@@ -1,0 +1,86 @@
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: prometheus
+  labels:
+    allow.http: "false"
+    application: prometheus
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      application: prometheus
+  template:
+    metadata:
+      labels:
+        application: prometheus
+    spec:
+      containers:
+      - name: prometheus
+      - args:
+        - --config.file=/etc/prometheus/prometheus.yml
+        - --storage.tsdb.path=/prometheus
+        - --web.console.libraries=/usr/share/prometheus/console_libraries
+        - --web.console.templates=/usr/share/prometheus/consoles
+        image: prom/prometheus:v2.1.0
+        volumeMounts:
+        - mountPath: /etc/prometheus
+          name: prometheus-configmap-volume
+        - mountPath: /prometheus
+          name: prometheus-data
+        - mountPath: /etc/config
+          name: prometheus-configmap-volume-alerts
+      restartPolicy: Always
+      volumes:
+      - name: prometheus-configmap-volume
+        configMap:
+          name: prometheus-configmap
+      - name: prometheus-data
+        persistentVolumeClaim:
+          claimName: prometheus-data
+      - name: prometheus-configmap-volume-alerts
+        configMap:
+          name: prometheus-configmap-alerts
+        ports:
+        - containerPort: 9090
+        securityContext:
+          privileged: true
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+  # namespace: whoami5
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80 # Porta a ser exposta pelo SERVICE
+    targetPort: 9090 # Porta que a aplicação está rodando no POD
+  selector:
+    application: prometheus
+
+
+---
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: prometheus
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.tls.certresolver: default
+spec:
+  rules:
+    - host: prometheus.rancher.devopsgiz33.cf
+      http:
+        paths:
+          - backend:
+              serviceName: prometheus
+              servicePort: 80
+
+
+
