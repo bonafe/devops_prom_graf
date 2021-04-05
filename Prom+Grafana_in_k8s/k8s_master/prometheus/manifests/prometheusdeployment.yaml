@@ -27,7 +27,7 @@ spec:
         - --storage.tsdb.path=/prometheus
         - --web.console.libraries=/usr/share/prometheus/console_libraries
         - --web.console.templates=/usr/share/prometheus/consoles
-        image: prom/prometheus:v2.2.1
+        image: prom/prometheus:v2.3.2
         name: prometheus
         volumeMounts:
         - mountPath: /etc/prometheus
