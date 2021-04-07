@@ -13,6 +13,7 @@ metadata:
     application: prometheus
 spec:
   replicas: 3
+  serviceName: prometheus-service
   selector:
     matchLabels:
       application: prometheus
