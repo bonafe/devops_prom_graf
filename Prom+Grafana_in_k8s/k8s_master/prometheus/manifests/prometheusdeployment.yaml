@@ -36,19 +36,19 @@ spec:
           mountPath: /prometheus/
         - name: prometheus-config-shared
           mountPath: /etc/prometheus-shared/
-        - name: prometheus-rules
+        - name: prometheus-configmap-alerts
           mountPath: /etc/prometheus/rules
       restartPolicy: Always
       volumes:
       - name: prometheus-config
         configMap:
           defaultMode: 420
-          name: prometheus-server-conf
+          name: prometheus-configmap
       - name: prometheus-config-shared
         emptyDir: {}
-      - name: prometheus-rules
+      - name: prometheus-configmap-alerts
         configMap:
-          name: prometheus-rules
+          name: prometheus-configmap-alerts
   volumeClaimTemplates:
   - metadata:
       name: prometheus-storage
