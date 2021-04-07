@@ -32,21 +32,21 @@ spec:
         image: prom/prometheus:v2.26.0
         name: prometheus
         volumeMounts:
-        - name: prometheus-storage
-          mountPath: /prometheus/
-        - name: prometheus-config-shared
-          mountPath: /etc/prometheus-shared/
-        - name: prometheus-configmap-alerts
-          mountPath: /etc/prometheus/rules
+        - mountPath: /etc/prometheus
+          name: prometheus-configmap-volume
+        - mountPath: /prometheus
+          name: prometheus-storage
+        - mountPath: /etc/config
+          name: prometheus-configmap-volume-alerts
       restartPolicy: Always
       volumes:
-      - name: prometheus-config
+      - name: prometheus-configmap-volume
         configMap:
-          defaultMode: 420
           name: prometheus-configmap
-      - name: prometheus-config-shared
-        emptyDir: {}
-      - name: prometheus-configmap-alerts
+      - name: prometheus-storage
+        persistentVolumeClaim:
+          claimName: prometheus-storage
+      - name: prometheus-configmap-volume-alerts
         configMap:
           name: prometheus-configmap-alerts
       securityContext:
