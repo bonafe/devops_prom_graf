@@ -11,7 +11,7 @@ metadata:
     allow.http: "false"
     application: prometheus
 spec:
-  replicas: 2
+  replicas: 3
   serviceName: prometheus-service
   selector:
     matchLabels:
