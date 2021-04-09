@@ -128,3 +128,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: prometheus
+  namespace: default
