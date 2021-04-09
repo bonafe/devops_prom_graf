@@ -28,7 +28,7 @@ spec:
         - --web.console.libraries=/usr/share/prometheus/console_libraries
         - --web.console.templates=/usr/share/prometheus/consoles
         - --storage.tsdb.no-lockfile
-        image: prom/prometheus:v2.26.0
+        image: prom/prometheus:v2.3.2
         name: prometheus
         volumeMounts:
         - mountPath: /etc/prometheus
