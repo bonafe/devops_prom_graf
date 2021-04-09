@@ -1,6 +1,5 @@
-
 ---
-kind: Deployment
+kind: StatefulSet
 apiVersion: apps/v1
 metadata:
   annotations:
@@ -13,6 +12,7 @@ metadata:
     application: prometheus
 spec:
   replicas: 2
+  serviceName: prometheus-service
   selector:
     matchLabels:
       application: prometheus
@@ -28,13 +28,13 @@ spec:
         - --web.console.libraries=/usr/share/prometheus/console_libraries
         - --web.console.templates=/usr/share/prometheus/consoles
         - --storage.tsdb.no-lockfile
-        image: prom/prometheus:v2.3.2
+        image: prom/prometheus:v2.26.0
         name: prometheus
         volumeMounts:
         - mountPath: /etc/prometheus
           name: prometheus-configmap-volume
         - mountPath: /prometheus
-          name: prometheus-data
+          name: prometheus-storage
         - mountPath: /etc/config
           name: prometheus-configmap-volume-alerts
       restartPolicy: Always
@@ -42,13 +42,26 @@ spec:
       - name: prometheus-configmap-volume
         configMap:
           name: prometheus-configmap
-      - name: prometheus-data
+      - name: prometheus-storage
         persistentVolumeClaim:
-          claimName: prometheus-data
+          claimName: prometheus-storage
       - name: prometheus-configmap-volume-alerts
         configMap:
           name: prometheus-configmap-alerts
-
+      securityContext:
+        fsGroup: 2000
+        runAsNonRoot: true
+        runAsUser: 1000
+  volumeClaimTemplates:
+  - metadata:
+      name: prometheus-storage
+      namespace: default
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: longhorn
+      resources:
+        requests:
+          storage: 2Gi
 ---
 apiVersion: v1
 kind: Service
@@ -116,5 +129,3 @@ subjects:
 - kind: ServiceAccount
   name: prometheus
   namespace: default
-
-
