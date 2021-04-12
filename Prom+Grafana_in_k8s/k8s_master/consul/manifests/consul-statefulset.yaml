@@ -79,7 +79,7 @@ spec:
         - name: config
           configMap:
             name: consul-configmap
-        - name: consult-storage
+        - name: consul-storage
             persistentVolumeClaim:
               claimName: consul-storage
   volumeClaimTemplates:
