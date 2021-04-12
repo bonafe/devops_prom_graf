@@ -80,8 +80,8 @@ spec:
           configMap:
             name: consul-configmap
         - name: consul-storage
-            persistentVolumeClaim:
-              claimName: consul-storage
+          persistentVolumeClaim:
+            claimName: consul-storage
   volumeClaimTemplates:
   - metadata:
       name: consul-storage
