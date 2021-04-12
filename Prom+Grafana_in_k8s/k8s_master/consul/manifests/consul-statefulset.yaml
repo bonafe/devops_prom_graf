@@ -47,6 +47,8 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /consul/myconfig
+            - name: consul-storage
+              mountPath: /consul/data
           lifecycle:
             preStop:
               exec:
@@ -77,3 +79,16 @@ spec:
         - name: config
           configMap:
             name: consul-configmap
+        - name: consult-storage
+            persistentVolumeClaim:
+              claimName: consul-storage
+  volumeClaimTemplates:
+  - metadata:
+      name: consul-storage
+      namespace: default
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: longhorn
+      resources:
+        requests:
+          storage: 2Gi
