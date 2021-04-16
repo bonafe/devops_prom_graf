@@ -23,22 +23,18 @@ O InfluxDB tem a função principal de servir como camada de persistência a lon
 Pré-requisitos:
 
 - kubectl (e respectivo ~/.kube/config para o cluster de Kubernetes alvo da instalação)
-- namespace "monitoring" 
+- namespace "default" 
+- longhorn
 
-Clonar o repositório:
-```
-$ git clone https://gitlab.icarotech.com/icarotech/managed-services/monitoring.git
-$ cd monitoring/kubernetes/influxdb
-```
 
 Aplicar os manifestos:
 
 ```
-$ kubectl apply -f manifests/ -n monitoring
+$ kubectl apply -f manifests/ -n default
 ```
 
 Conferir se a aplicação ocorreu com sucesso:
 
 ```
-$ kubectl get pods --selector=app=influxdb -n monitoring
+$ kubectl get pods --selector=app=influxdb -n default
 ```

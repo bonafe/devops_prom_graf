@@ -13,3 +13,5 @@ As ferramentas disponíveis são:
 - Grafana
 - MariaDB (grafanadb)
 - Consul
+- NFS-provisioner
+- Longhorn(Aplicado via apps no Rancher)

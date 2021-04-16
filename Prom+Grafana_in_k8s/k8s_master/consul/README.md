@@ -31,29 +31,19 @@ Pré-requisitos:
 
 - golang 1.15+
 - kubectl (e respectivo ~/.kube/config para o cluster de Kubernetes alvo da instalação)
-- namespace "monitoring" 
+- namespace "default" 
+- longhorn
 
-Clonar o repositório:
-```
-$ git clone https://gitlab.icarotech.com/icarotech/managed-services/monitoring.git
-$ cd monitoring/kubernetes/consul
-```
 
-Gerar os certificados e criar o gossip secret:
-
-```
-$ chmod a+x create_certificates.sh
-$ ./create_certificates.sh
-```
 
 Aplicar os manifestos:
 
 ```
-$ kubectl apply -f manifests/ -n monitoring
+$ kubectl apply -f manifests/ -n default
 ```
 
 Conferir se a aplicação ocorreu com sucesso:
 
 ```
-$ kubectl get pods --selector=app=consul -n monitoring
+$ kubectl get pods --selector=app=consul -n default
 ```

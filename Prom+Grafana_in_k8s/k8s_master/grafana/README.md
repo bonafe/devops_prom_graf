@@ -39,36 +39,32 @@ O Grafana não necessita obrigatoriamente de um banco de dados externo, contudo,
 
 Pré-requisitos:
 
-- kubectl (e respectivo ~/.kube/config para o cluster de Kubernetes alvo da instalação)
-- namespace "monitoring" 
-
-Clonar o repositório:
-```
-$ git clone https://gitlab.icarotech.com/icarotech/managed-services/monitoring.git
-$ cd monitoring/kubernetes/
-```
+- kubectl (e respectivo ~/.kube/config para o cluster de Kubernetes alvo da instalação) 
+- diretório /grafana_data e /grafana_data_prov criado em um servidor NFS e mapeado para os demais servidores.
+- Instalar o longhorn como storageclass usando o App's do Rancher no namespace Default.
+- Seguir os procedimentos do arquivo NFS-multiplos-nodes.txt na raiz desse projeto.
 
 Aplicar os manifestos para o GrafanaDB (MariaDB):
 ```
 $ cd grafanadb
-$ kubectl apply -f manifests/ -n monitoring
+$ kubectl apply -f manifests/ -n default
 ```
 
 Conferir se a aplicação ocorreu com sucesso:
 
 ```
-$ kubectl get pods --selector=app=grafanadb -n monitoring
+$ kubectl get pods --selector=app=grafanadb -n default
 ```
 
 Aplicar os manifestos:
 
 ```
 $ cd ../grafana
-$ kubectl apply -f manifests/ -n monitoring
+$ kubectl apply -f manifests/ -n default
 ```
 
 Conferir se a aplicação ocorreu com sucesso:
 
 ```
-$ kubectl get pods --selector=app=grafana -n monitoring
+$ kubectl get pods --selector=app=grafana -n default
 ```
