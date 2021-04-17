@@ -1,0 +1,15 @@
+Para registrar novo serviço
+curl --request PUT --data @node_exporter.json 167.71.18.40:30850/v1/agent/service/register
+
+Para remover um serviço no consul
+curl --request PUT 167.71.18.40:30850/v1/agent/service/deregister/k3s1_node_exporter
+
+
+Por enquanto quando reboot os serviços n voltam sozinhos pro consul, então no reboot do servidor eu criei o script exporter_to_consul.sh com o
+conteúdo:
+
+#! /bin/sh
+curl --request PUT --data @/opt/node_exporter.json 167.71.18.40:30850/v1/agent/service/register
+
+e coloquei na crontab :
+@reboot /opt/exporter_to_consul.sh
