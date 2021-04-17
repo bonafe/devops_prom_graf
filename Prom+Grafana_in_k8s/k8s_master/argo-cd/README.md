@@ -27,8 +27,7 @@ $ Com o nome do pod em mãos vamos acessá-lo para trocar a senha default config
 $ Já dentro do POD do ArgoCD rodar o seguinte comando = "argocd login <ARGOCD_SERVER>"  # p.e localhost:8080 ou argocd.example.com
 $ Será solicitado o user e senha, que por padrão é admin/<nome_do_pod>
 $ Após login executar o comando a seguir para trocar a senha default = "argocd account update-password"
-$ Feito isso selecionar os POD's da aplicação argocd no namespace e executar o redeploy
-$ Com a aplicação de pé novamente, acessar a UI(O endereço pode ser encontrado na tela do Rancher ao selecionar o namespace em que o Argo foi configurado).Essa informação fica logo abaixo do nome do POD argo-cd-argocd-server, clicar em um dos endereços abaixo dele e será aberta tela de login.
+$ Acessar a UI(O endereço pode ser encontrado na tela do Rancher ao selecionar o namespace em que o Argo foi configurado).Essa informação fica logo abaixo do nome do POD argo-cd-argocd-server, clicar em um dos endereços abaixo dele e será aberta tela de login.
 $ Feito login com user admin e senha configurada anteriormente, navegar até a engrenagem no lado esquerdo e configurar o seu repositório(GitHub,GitLab,etc)
 $ Após configurado seu repositório pode voltar a tela inicial do ArgoCD e cadastrar suas aplicações a serem monitoradas e seus respectivos diretórios no repositório e toda vez que alguma mudança for aplicada na master do seu repo, ela refletirá em seu cluster k8s.
 ```
