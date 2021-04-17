@@ -15,4 +15,4 @@ spec:
     - nfsvers=4.1
   nfs:
     path: /grafana_data_prov
-    server: 10.116.0.8 
+    server: 10.108.0.2
