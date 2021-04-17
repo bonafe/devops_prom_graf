@@ -23,7 +23,7 @@ $ Na interface do Rancher ir até Apps e buscar por ArgoCD
 $ Na janela que se abrir rolar selecionando o namespace desejado(default no nosso caso) e aplicar o ArgoCD no cluster(A instalação e deploy podem demorar até 5 minutos)
 $ Após o deploy, abrir o cluster desejado na tela inicial do Rancher e acessar a opção Launch Kubectl.
 $ No prompt que se abrir pegar o nome do pod em que foi feito o deploy do ArgoCD com o comando = "kubectl get pods -n default -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f 2"
-$ Com o nome do pod em mãos vamos acessá-lo para trocar a senha default configurada(que nesse caso sempre é o nome do POD criado), executar o comando a seguir para acessar o POD = "kubectl exec -it <nome_do_pod> -- bash"
+$ Com o nome do pod em mãos vamos acessá-lo para trocar a senha default configurada(que nesse caso sempre é o nome do POD criado), executar o comando a seguir para acessar o POD = "kubectl -n argo-cd exec -it <nome_do_pod> -- bash"
 $ Já dentro do POD do ArgoCD rodar o seguinte comando = "argocd login <ARGOCD_SERVER>"  # p.e localhost:8080 ou argocd.example.com
 $ Será solicitado o user e senha, que por padrão é admin/<nome_do_pod>
 $ Após login executar o comando a seguir para trocar a senha default = "argocd account update-password"
