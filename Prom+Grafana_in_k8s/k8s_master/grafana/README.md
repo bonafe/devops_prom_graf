@@ -40,7 +40,7 @@ O Grafana não necessita obrigatoriamente de um banco de dados externo, contudo,
 Pré-requisitos:
 
 - kubectl (e respectivo ~/.kube/config para o cluster de Kubernetes alvo da instalação) 
-- diretório /grafana_data e /grafana_data_prov criado em um servidor NFS e mapeado para os demais servidores.
+- diretório /grafana_data e /grafana_data_prov criado em um servidor NFS e mapeado para os demais servidores.Lembrar de trocar o IP do server NFS nos arquivos de persistvolume.
 - Instalar o longhorn como storageclass usando o App's do Rancher no namespace Default.
 - Seguir os procedimentos do arquivo NFS-multiplos-nodes.txt na raiz desse projeto.
 
