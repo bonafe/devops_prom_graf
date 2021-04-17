@@ -31,7 +31,7 @@ O Prometheus não necessita obrigatoriamente de um banco de dados externo, contu
 Pré-requisitos:
 
 - kubectl (e respectivo ~/.kube/config para o cluster de Kubernetes alvo da instalação) 
-- diretório /grafana_data e /grafana_data_prov criado em um servidor NFS e mapeado para os demais servidores.
+- diretório /grafana_data e /grafana_data_prov criado em um servidor NFS e mapeado para os demais servidores.Lembrar de alterar no arquivo persist volume o IP do server NFS.
 - Instalar o longhorn como storageclass usando o App's do Rancher no namespace Default.
 
 Aplicar os manifestos para o InfluxDB:
