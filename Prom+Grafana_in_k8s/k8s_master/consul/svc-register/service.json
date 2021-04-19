@@ -1,5 +1,5 @@
 {
-  "Address": "10.116.0.7",
+  "Address": "10.108.0.2",
   "ID": "k3s1_NodeExporter",
   "Name": "node-exporter",
   "Port": 9100,
