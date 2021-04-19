@@ -33,6 +33,7 @@ Pré-requisitos:
 - kubectl (e respectivo ~/.kube/config para o cluster de Kubernetes alvo da instalação)
 - namespace "default" 
 - longhorn
+- Trocar os IP'S dos arquivos web.json e service.json que ficam na pasta svc-register para um IP válido dos servidores do cluster que esteja rodando o node_exporter.
 
 
 
