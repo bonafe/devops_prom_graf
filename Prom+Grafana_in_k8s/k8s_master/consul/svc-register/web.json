@@ -4,7 +4,7 @@
   "port": 9100,
   "check": {
     "name": "ping check",
-    "args": ["ping", "-c1", "10.116.0.7"],
+    "args": ["ping", "-c1", "10.108.0.2"],
     "interval": "30s",
     "status": "passing"
   }
