@@ -22,7 +22,7 @@ spec:
           application: grafana
     spec:
       containers:
-      - image: grafana/grafana:7.1.5
+      - image: grafana/grafana:7.5.4
         name: grafana
         volumeMounts:
         - mountPath: /etc/grafana/grafana.ini
