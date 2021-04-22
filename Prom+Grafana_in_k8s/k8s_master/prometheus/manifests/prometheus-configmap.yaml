@@ -27,7 +27,7 @@ data:
     - job_name: 'node_exporter_consul'
       consul_sd_configs:
       - server: 'consul:8500'
-        services: ['k3sMaster_node_exporter','k3s1_node_exporter','k3s2_node_exporter']
+        services: ['k3s_node01']
       relabel_configs:
       - source_labels: [__meta_consul_tags]
         regex: .*,_service=([^,]+),.*
