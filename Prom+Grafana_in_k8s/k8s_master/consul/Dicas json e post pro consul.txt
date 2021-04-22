@@ -2,6 +2,7 @@ curl --request PUT --data @web.json <consul_url:consul_port>/v1/agent/service/re
 {
   "id": "orion42_node_exporter",
   "name": "orion42_node_exporter",
+  "Address": "orion42.icarotech.com",
   "port": 9100,
   "check": {
     "name": "ping check",
