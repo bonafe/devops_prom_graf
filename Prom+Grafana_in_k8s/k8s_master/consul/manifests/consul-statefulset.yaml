@@ -31,16 +31,16 @@ spec:
             httpGet:
               path: /
               port: 8080
-            periodSeconds: 10
+            periodSeconds: 40
             failureThreshold: 3
-            initialDelaySeconds: 20
+            initialDelaySeconds: 50
           readinessProbe:
             httpGet:
               path: /
               port: 8080
-            periodSeconds: 10
+            periodSeconds: 20
             failureThreshold: 5
-            initialDelaySeconds: 3
+            initialDelaySeconds: 50
           args:
             - "agent"
             - "-advertise=$(POD_IP)"
