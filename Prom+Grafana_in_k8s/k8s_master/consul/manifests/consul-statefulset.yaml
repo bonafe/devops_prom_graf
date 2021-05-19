@@ -27,20 +27,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 8500
-            periodSeconds: 40
-            failureThreshold: 3
-            initialDelaySeconds: 50
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 8500
-            periodSeconds: 20
-            failureThreshold: 5
-            initialDelaySeconds: 50
           args:
             - "agent"
             - "-advertise=$(POD_IP)"
