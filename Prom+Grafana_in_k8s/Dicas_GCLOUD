@@ -1,0 +1,53 @@
+## Para DNS GCLOUD
+Menu de navegação - Serviços de Rede - Cloud DNS - Criar uma nova zona DNS
+Inserir conforme abaixo:
+
+Filtro
+	
+Nome do DNS
+Tipo
+TTL (segundos)
+Dados
+	
+	
+	*.rancher.devopsgiz33.cf. 	A 	300 	
+
+    34.136.73.197
+    35.226.152.100
+    35.223.183.43 
+
+	
+	
+	devopsgiz33.cf. 	NS 	21600 	
+
+    ns-cloud-c1.googledomains.com.
+    ns-cloud-c2.googledomains.com.
+    ns-cloud-c3.googledomains.com.
+    ns-cloud-c4.googledomains.com. 
+
+	
+	
+	devopsgiz33.cf. 	SOA 	21600 	
+
+    ns-cloud-c1.googledomains.com. cloud-dns-hostmaster.google.com. 1 21600 3600 259200 300 
+
+	
+	
+	rancher.devopsgiz33.cf. 	A 	300 	
+
+    34.70.178.190 
+
+	
+	
+	www.devopsgiz33.cf. 	CNAME 	300 	
+
+    devopsgiz33.cf. 
+ 
+ 
+ ## Chave SSH
+ Criar uma chave SSH e adicionar ela em METADADOS(Link abaixo) - Editar e inserir a chave SSH
+ https://console.cloud.google.com/compute/metadata/sshKeys?_ga=2.171394852.548645729.1624552541-104862831.1623984967&_gac=1.51899099.1624552541.Cj0KCQjw2tCGBhCLARIsABJGmZ4UoHDQt-nJtEy4BW4x2QweV8xW8fPbo2GuPBcswMKhP4fOH3U9W7gaAt70EALw_wcB&project=watchful-ripple-317502&folder&organizationId=1062269944070
+ 
+ 
+ ## IMPORTANTE CASO QUEIRA ACESSO AOS SERVIDORES VIA HTTP, NA HORA DE CRIAR A VM HABILITAR ACESSO HTTP E HTTPS
+ 
