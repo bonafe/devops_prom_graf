@@ -51,3 +51,22 @@ Dados
  
  ## IMPORTANTE CASO QUEIRA ACESSO AOS SERVIDORES VIA HTTP, NA HORA DE CRIAR A VM HABILITAR ACESSO HTTP E HTTPS
  
+ 
+ ## QUANDO PARAR E RESTARTAR AS VMS TEM QUE ADICIONAR OS NOVOS IPS EXTERNOS NO DNS
+ NO RANCHER EXECUTAR COMANDO PARA SETAR O CONNTRACK PRO PEDIDO NO LOG DO DOCKER, VAI FICAR DANDO ERRO.SEGUIR RECOMENDAÇÃO A SEGUIR:
+ 
+ On Ubuntu 20.04, it helped to set the sysctl variable on the host to the expected value:
+
+sysctl -w net/netfilter/nf_conntrack_max=524288
+
+This seems to be related to #33360.
+@cclhsu
+Contributor Author
+cclhsu commented 9 days ago
+
+After some testing, on the host, set net/netfilter/nf_conntrack_max to the same number 393216 as docker log before starting Rancher docker will bypass the issue.
+
+I0628 01:25:49.254940      44 conntrack.go:103] Set sysctl 'net/netfilter/nf_conntrack_max' to 393216
+F0628 01:25:49.254955      44 server.go:495] open /proc/sys/net/netfilter/nf_conntrack_max: permission denied
+
+ 
