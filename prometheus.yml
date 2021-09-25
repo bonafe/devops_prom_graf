@@ -1,0 +1,60 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "/etc/prometheus/alert.rules"
+  # - "first.rules"
+  # - "second.rules"
+
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      - 165.232.150.12:9093
+
+scrape_configs:
+  - job_name: prometheus
+    metrics_path: /prometheus/metrics
+    scheme: https
+    basic_auth:
+      username: 'admin'
+      password: 'secret'
+    tls_config:
+      insecure_skip_verify: true
+    static_configs:
+      - targets: ['192.168.0.192']
+  - job_name: cadvisor
+    static_configs:
+    - targets:
+      - 192.168.0.192:8080
+      - 192.168.0.189:8080
+  - job_name: node_exporter
+    static_configs:
+    - targets:
+      - 192.168.0.192:9100
+      - 192.168.0.189:9100
+  - job_name: apache_exporter
+    static_configs:
+     - targets: ['165.227.220.250:9117']
+  - job_name: ubuntu_node_exporter
+    static_configs:
+     - targets: ['165.227.220.250:9100']
+  - job_name: windows_exporter
+    static_configs:
+     - targets: ['192.168.0.194:9182']
+  - job_name: 'snmp'
+    static_configs:
+      - targets:
+        - 127.0.0.1  # SNMP device.
+    metrics_path: /snmp
+    params:
+      module: [if_mib]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 165.227.220.250:9116  # The SNMP exporter's real hostname:port.
+  
